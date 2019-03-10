@@ -43,6 +43,8 @@
         <slf4j.version>1.7.25</slf4j.version>
         <junit.version>5.3.1</junit.version>
         <surefire.log.level>INFO</surefire.log.level>
+
+        <struts.version>2.5.20</struts.version>
     </properties>
 
     <prerequisites>
@@ -51,6 +53,8 @@
 
     <modules>
         <module>itests</module>
+        <module>profiles</module>
+        <module>starter</module>
     </modules>
 
     <repositories>
@@ -142,6 +146,12 @@
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.struts</groupId>
+                <artifactId>struts2-core</artifactId>
+                <version>${struts.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
