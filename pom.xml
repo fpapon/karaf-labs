@@ -55,6 +55,7 @@
         <module>itests</module>
         <module>profiles</module>
         <module>starter</module>
+        <module>distrib</module>
     </modules>
 
     <repositories>
@@ -182,6 +183,11 @@
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-maven-plugin</artifactId>
+                    <version>${karaf.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.karaf.tooling</groupId>
