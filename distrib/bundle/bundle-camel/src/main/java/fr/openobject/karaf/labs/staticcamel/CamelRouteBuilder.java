@@ -23,7 +23,7 @@ public class CamelRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("timer:fire?period=5000").
-                to("log:training");
+                log("training");
     }
     
 }

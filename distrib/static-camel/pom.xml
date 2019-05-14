@@ -34,7 +34,7 @@
 
     <properties>
         <karaf-static.version>4.3.0-SNAPSHOT</karaf-static.version>
-        <camel.version>3.0.0-SNAPSHOT</camel.version>
+        <camel.version>2.24.0</camel.version>
     </properties>
 
     <dependencies>
@@ -75,81 +75,53 @@
         </dependency>
 
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-            <version>${camel.version}</version>
+            <groupId>fr.openobject.karaf.labs</groupId>
+            <artifactId>bundle-camel</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
+                <version>${karaf-static.version}</version>
+                <executions>
+                    <execution>
+                        <id>process-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>package</id>
+                        <goals>
+                            <goal>archive</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <instructions>
-                        <Import-Package>
-                            org.osgi.framework;version="[6,7)",
-                            *
-                        </Import-Package>
-                    </instructions>
+                    <startupFeatures>
+                        <startupFeature>static-framework</startupFeature>
+                        <startupFeature>jaas</startupFeature>
+                        <startupFeature>shell</startupFeature>
+                        <startupFeature>ssh</startupFeature>
+                        <startupFeature>bundle</startupFeature>
+                        <startupFeature>config</startupFeature>
+                        <startupFeature>log</startupFeature>
+                        <startupFeature>scr</startupFeature>
+                        <startupFeature>camel-core</startupFeature>
+                    </startupFeatures>
+                    <startupBundles>
+                        <startupBundle>mvn:fr.openobject.karaf.labs/bundle-camel/1.0.0-SNAPSHOT</startupBundle>
+                    </startupBundles>
+                    <framework>static</framework>
+                    <useReferenceUrls>true</useReferenceUrls>
+                    <environment>static</environment>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>static</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.karaf.tooling</groupId>
-                        <artifactId>karaf-maven-plugin</artifactId>
-                        <version>${karaf-static.version}</version>
-                        <executions>
-                            <execution>
-                                <id>process-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>assembly</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>package</id>
-                                <goals>
-                                    <goal>archive</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <startupFeatures>
-                                <startupFeature>static-framework</startupFeature>
-                                <startupFeature>jaas</startupFeature>
-                                <startupFeature>shell</startupFeature>
-                                <startupFeature>ssh</startupFeature>
-                                <startupFeature>bundle</startupFeature>
-                                <startupFeature>config</startupFeature>
-                                <startupFeature>log</startupFeature>
-                                <startupFeature>scr</startupFeature>
-                                <startupFeature>camel-core</startupFeature>
-                            </startupFeatures>
-                            <startupBundles>
-<!--                                <startupBundle>mvn:fr.openobject.karaf.labs/static-camel/${project.version}</startupBundle>-->
-                            </startupBundles>
-                            <framework>static</framework>
-                            <useReferenceUrls>true</useReferenceUrls>
-                            <environment>static</environment>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
