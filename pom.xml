@@ -57,6 +57,7 @@
         <module>starter</module>
         <module>distrib</module>
         <module>demo</module>
+        <module>karaf-boot</module>
     </modules>
 
     <repositories>
