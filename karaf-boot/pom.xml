@@ -56,6 +56,10 @@
                     <generateDockerFile>false</generateDockerFile>
                     <buildDockerImage>false</buildDockerImage>
                     <javase>1.8</javase>
+                    <rmiRegistryHost>localhost</rmiRegistryHost>
+                    <rmiRegistryPort>1111</rmiRegistryPort>
+                    <rmiServerHost>localhost</rmiServerHost>
+                    <rmiServerPort>22222</rmiServerPort>
                 </configuration>
                 <executions>
                     <execution>
