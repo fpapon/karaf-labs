@@ -16,17 +16,17 @@
  */
 package fr.openobject.karaf.labs.tutorial.boot;
 
-import java.util.HashMap;
 import java.util.Map;
-import org.apache.karaf.boot.runtime.Boot;
-import org.apache.karaf.boot.runtime.Config;
-import org.apache.karaf.boot.runtime.Datasource;
-import org.apache.karaf.boot.runtime.Feature;
 import org.apache.karaf.boot.runtime.KarafApplication;
-import org.apache.karaf.boot.runtime.Management;
-import org.apache.karaf.boot.runtime.Repository;
-import org.apache.karaf.boot.runtime.Runtime;
-import org.apache.karaf.boot.runtime.Security;
+import org.apache.karaf.boot.runtime.annotation.Boot;
+import org.apache.karaf.boot.runtime.annotation.Config;
+import org.apache.karaf.boot.runtime.annotation.Datasource;
+import org.apache.karaf.boot.runtime.annotation.Feature;
+import org.apache.karaf.boot.runtime.annotation.Management;
+import org.apache.karaf.boot.runtime.annotation.Property;
+import org.apache.karaf.boot.runtime.annotation.Repository;
+import org.apache.karaf.boot.runtime.annotation.Runtime;
+import org.apache.karaf.boot.runtime.annotation.Security;
 
 @Runtime(name = "karaf-custom-runtime",
             environment = Runtime.Environment.DYNAMIC,
@@ -47,69 +47,72 @@ import org.apache.karaf.boot.runtime.Security;
         )
 public class BootRuntime {
 
-    @Config(pid = "my.app.config", policy = Config.Policy.CREATE)
-    private Map<String, String> myConfigFile() {
-        Map<String, String> data = new HashMap<>();
-        data.put("key1", "value1");
-        return data;
-    }
+    @Config(pid = "my.app.config",
+            policy = Config.Policy.CREATE,
+            properties = {
+                @Property(key = "key1", value = "value1"),
+                @Property(key = "key2", value = "value2")
+            })
+    public Map<String, String> myConfigFile;
 
-    @Config(pid = "my.app.config.resource", policy = Config.Policy.UPDATE, resource = "application.properties")
-    private Map<String, String> myConfigFileFormResource() {
-        Map<String, String> data = new HashMap<>();
-        data.put("key1", "value1");
-        return data;
-    }
+    @Config(pid = "my.app.config.resource",
+            policy = Config.Policy.UPDATE,
+            resource = "application.properties",
+            properties = {
+                @Property(key = "key11", value = "value11"),
+                @Property(key = "key22", value = "value22")
+            })
+    public Map<String, String> myConfigFileFormResource;
 
-    @Datasource(name = "jdbc/my-datasource")
-    private Map<Datasource.Property, String> myDatasourceFile() {
-        Map<Datasource.Property, String> data = new HashMap<>();
-        data.put(Datasource.Property.DatabaseName, "database1");
-        data.put(Datasource.Property.DatabaseServer, "localhost");
-        data.put(Datasource.Property.DatabasePort, "5432");
-        data.put(Datasource.Property.DatabaseUser, "user");
-        data.put(Datasource.Property.DatabasePassword, "password");
-        return data;
-    }
+    @Datasource(name = "jdbc/my-datasource",
+            properties = {
+                    @Property(key = Datasource.Key.DatabaseName, value = "database1"),
+                    @Property(key = Datasource.Key.DatabaseServer, value = "localhost"),
+                    @Property(key = Datasource.Key.DatabasePort, value = "5432"),
+                    @Property(key = Datasource.Key.DatabaseUser, value = "user"),
+                    @Property(key = Datasource.Key.DatabasePassword, value = "password"),
+                    @Property(key = Datasource.Key.Driver, value = "org.postgres.Driver"),
+            })
+    public Map<String, String> myDatasourceFile;
 
-    @Datasource(name = "jdbc/my-datasource-file", resource = "datasource.properties")
-    private Map<Datasource.Property, String> myDatasourceFileFromResource() {
-        Map<Datasource.Property, String> data = new HashMap<>();
-        data.put(Datasource.Property.DatabaseUser, "user");
-        data.put(Datasource.Property.DatabasePassword, "password");
-        return data;
-    }
+    @Datasource(name = "jdbc/my-datasource-file",
+            resource = "datasource.properties",
+            properties = {
+                    @Property(key = Datasource.Key.DatabaseUser, value = "user"),
+                    @Property(key = Datasource.Key.DatabasePassword, value = "password"),
+            })
+    public Map<String, String> myDatasourceFileFromResource;
 
-    @Management(type = Management.Type.Shell)
-    private Map<Management.Shell, String> myShellConfig() {
-        Map<Management.Shell, String> data = new HashMap<>();
-        data.put(Management.Shell.RmiRegistryHost, "127.0.0.1");
-        data.put(Management.Shell.RmiRegistryPort, "44444");
-        return data;
-    }
+    @Management(type = Management.Type.Shell,
+            properties = {
+                    @Property(key = Management.Shell.RmiRegistryHost, value = "127.0.0.1"),
+                    @Property(key = Management.Shell.RmiRegistryPort, value = "44444"),
+            })
+    private Map<String, String> myShellConfig;
 
-    @Management(type = Management.Type.Http)
-    private Map<Management.Http, String> myHttpConfig() {
-        Map<Management.Http, String> data = new HashMap<>();
-        data.put(Management.Http.HttpPort, "8181");
-        data.put(Management.Http.HttpsPort, "443");
-        return data;
-    }
+    @Management(type = Management.Type.Http,
+            properties = {
+                    @Property(key = Management.Http.HttpPort, value = "8181"),
+                    @Property(key = Management.Http.HttpsPort, value = "443"),
+            })
+    private Map<String, String> myHttpConfig;
 
-    @Security(type = Security.Type.Group)
-    private Map<String, Security.Role[]> mySecurityGroupConfig() {
-        Map<String, Security.Role[]> data = new HashMap<>();
-        data.put("my-group", new Security.Role[]{Security.Role.admin, Security.Role.group, Security.Role.ssh});
-        return data;
-    }
+    @Security(type = Security.Type.Group,
+            properties = {
+                    @Property(key = Security.Role.admin),
+                    @Property(key = Security.Role.group),
+                    @Property(key = Security.Role.ssh)
+            })
+    private Map<String, String> mySecurityCustomGroup;
 
-    @Security(type = Security.Type.User)
-    private Map<String, String> mySecurityUserConfig() {
-        Map<String, String> data = new HashMap<>();
-        data.put("toto", "my-group");
-        data.put("titi", "admingroup");
-        return data;
-    }
+    @Security(type = Security.Type.User,
+            properties = {
+                    @Property(key = "toto", value = "my-group"),
+                    @Property(key = "titi", value = Security.Group.admingroup)
+            }
+    )
+    private Map<String, String> mySecurityUserConfig;
+
 
     public static void main(String[] args) {
         KarafApplication.run(BootRuntime.class, args);
