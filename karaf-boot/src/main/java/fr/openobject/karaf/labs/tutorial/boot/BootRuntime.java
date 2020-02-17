@@ -29,22 +29,19 @@ import org.apache.karaf.boot.runtime.annotation.Runtime;
 import org.apache.karaf.boot.runtime.annotation.Security;
 
 @Runtime(name = "karaf-custom-runtime",
-            environment = Runtime.Environment.DYNAMIC,
-            jre = Runtime.Jre.JAVA_11,
-            frameworks = {
-                Runtime.Framework.STANDARD,
-                Runtime.Framework.ENTERPRISE},
-            repositories = {
-                @Repository(name = "camel", url = "org.apache.camel.karaf/apache-camel", version = "3.0.0")
-            },
-            features = {
-                @Feature(name = "http", version = "LATEST"),
-                @Feature(name = "http-whiteboard", version = "LATEST")},
-            bootPackages = {
-                @Boot(name = "jaxrs", version = "1.2.0", pack = Boot.Pack.JAXRS),
-                @Boot(name = "jpa", version = "2.1.0", pack = Boot.Pack.JPA),
-            }
-        )
+        environment = Runtime.Environment.DYNAMIC,
+        jre = Runtime.Jre.JAVA_11,
+        frameworks = {
+            Runtime.Framework.STANDARD,
+            Runtime.Framework.ENTERPRISE},
+        repositories = {
+            @Repository(name = "camel", url = "org.apache.camel.karaf/apache-camel", version = "3.0.0")},
+        features = {
+            @Feature(name = "http", version = "LATEST"),
+            @Feature(name = "http-whiteboard", version = "LATEST")},
+        bootPackages = {
+            @Boot(name = "jaxrs", version = "1.2.0", pack = Boot.Pack.JAXRS),
+            @Boot(name = "jpa", version = "2.1.0", pack = Boot.Pack.JPA)})
 public class BootRuntime {
 
     @Config(pid = "my.app.config",
@@ -109,8 +106,7 @@ public class BootRuntime {
             properties = {
                     @Property(key = "toto", value = "my-group"),
                     @Property(key = "titi", value = Security.Group.admingroup)
-            }
-    )
+            })
     private Map<String, String> mySecurityUserConfig;
 
 
