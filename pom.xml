@@ -58,6 +58,7 @@
         <module>distrib</module>
         <module>demo</module>
         <module>karaf-boot</module>
+        <module>winegrower</module>
     </modules>
 
     <repositories>
