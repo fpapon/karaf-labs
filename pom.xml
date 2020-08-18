@@ -59,6 +59,7 @@
         <module>demo</module>
         <module>karaf-boot</module>
         <module>winegrower</module>
+        <module>light</module>
     </modules>
 
     <repositories>
@@ -290,7 +291,7 @@
         <profile>
             <id>rat</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>

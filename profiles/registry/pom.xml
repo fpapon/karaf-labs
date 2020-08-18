@@ -29,6 +29,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>profiles-registry</artifactId>
-    <packaging>pom</packaging>
+    <packaging>bundle</packaging>
     <name>Karaf :: Labs :: Tutorial :: Profiles :: Registry</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.openobject.karaf.labs</groupId>
+            <artifactId>light</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
